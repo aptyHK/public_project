@@ -1,0 +1,15 @@
+server.port: 8099
+
+spring.datasource:
+  driverClassName: "org.hibernate.dialect.PostgreSQLDialect"
+  url: "jdbc:postgresql://localhost:5432/projectecom"
+  username: "postgres"
+  password: "admin1234"
+spring:
+  h2:
+    console:
+      enabled: true
+
+spring.jpa:
+  show-sql: true
+  hibernate.ddl-auto: update # update
