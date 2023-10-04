@@ -8,7 +8,7 @@ import com.javahk.project.finnhub.model.finnhub.resp.SymbolDTO;
 public interface StockSymbolService {
     List<SymbolDTO> getAllSymbols();
 
-    List<StockSymbol> saveAllSymbols();
+    List<StockSymbol> save(List<SymbolDTO> symbols);
     
-    // void deleteAll();
+    void deleteAll();
 }

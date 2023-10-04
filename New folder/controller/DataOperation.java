@@ -20,8 +20,4 @@ public interface DataOperation {
     @PostMapping(value = "/data/stock/{symbol}")
     @ResponseStatus(value = HttpStatus.OK)
     void save(@PathVariable String symbol);
-
-    @PostMapping(value = "/data/stock/symbols")
-    @ResponseStatus(value = HttpStatus.OK)
-    void saveAllSymbols();
 }
