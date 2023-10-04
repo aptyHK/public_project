@@ -51,8 +51,8 @@ public class Stock implements Serializable {
     @Column(name = "status", columnDefinition = "VARCHAR(1)") // 'A', 'I'
     private Character stockStatus;
 
-    // @OneToOne
-    // @JoinColumn(name = "symbol_id", nullable = false)
-    // private StockSymbol stockSymbol;
+    @OneToOne
+    @JoinColumn(name = "symbol_id", nullable = false)
+    private StockSymbol stockSymbol;
 
 }
