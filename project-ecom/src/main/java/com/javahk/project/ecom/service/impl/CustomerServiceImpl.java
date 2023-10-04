@@ -1,5 +1,6 @@
 package com.javahk.project.ecom.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer addCustomer(Customer customer) {
+        customer.setCreatedOn(LocalDateTime.now());
         customerRepository.save(customer);
 		return customer;
       //return new Customer();
