@@ -10,5 +10,5 @@ public interface StockSymbolService {
 
     List<StockSymbol> save(List<SymbolDTO> symbols);
     
-    void deleteAll();
+    // void deleteAll();
 }
