@@ -12,7 +12,7 @@ import com.javahk.project.finnhub.model.finnhub.resp.CompanyProfile2DTO;
 import com.javahk.project.finnhub.service.CompanyService;
 
 public interface DataOperation {
-    
+
     @GetMapping(value = "/stock/{symbol}")
     @ResponseStatus(value = HttpStatus.OK)
     CompanyProfile2DTO getCompanyProfile2BySymbol(@PathVariable String symbol);
@@ -24,4 +24,8 @@ public interface DataOperation {
     @PostMapping(value = "/data/stock/symbols")
     @ResponseStatus(value = HttpStatus.OK)
     void saveAllSymbols();
+
+    @PostMapping(value = "/data/stock/{symbol}/price")
+    @ResponseStatus(value = HttpStatus.OK)
+    void savePrice(String symbol);
 }

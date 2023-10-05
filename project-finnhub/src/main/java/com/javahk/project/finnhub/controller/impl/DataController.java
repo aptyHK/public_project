@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.javahk.project.finnhub.controller.DataOperation;
 import com.javahk.project.finnhub.model.finnhub.resp.CompanyProfile2DTO;
 import com.javahk.project.finnhub.service.CompanyService;
+import com.javahk.project.finnhub.service.StockPriceService;
 import com.javahk.project.finnhub.service.StockSymbolService;
 
 @RestController
@@ -18,6 +19,9 @@ public class DataController implements DataOperation {
 
     @Autowired
     StockSymbolService stockSymbolService;
+
+    @Autowired
+    StockPriceService stockPriceService;
 
     @Override
     public CompanyProfile2DTO getCompanyProfile2BySymbol(String symbol) {
@@ -32,5 +36,10 @@ public class DataController implements DataOperation {
     @Override
     public void saveAllSymbols() {
         stockSymbolService.saveAllSymbols();
+    }
+
+    @Override
+    public void savePrice(String symbol) {
+        stockPriceService.savePrice(symbol);
     }
 }
