@@ -25,12 +25,6 @@ public class FinnhubMapper {
                 .build();
     }
 
-    public StockSymbol map(SymbolDTO symbol) {
-        return StockSymbol.builder() //
-                .symbol(symbol.getSymbol())
-                .build();
-    }
-
     public StockPrice map(QuoteDTO quote) {
         return StockPrice.builder() //
                 .currentPrice(quote.getCurrentPrice()) //
@@ -41,4 +35,9 @@ public class FinnhubMapper {
                 .build();
     }
 
+    public StockSymbol map(SymbolDTO symbol) {
+        return StockSymbol.builder() //
+                .symbol(symbol.getSymbol())
+                .build();
+    }
 }

@@ -5,18 +5,25 @@ api:
     token: "ck4fiehr01qus81pv330ck4fiehr01qus81pv33g"
     domain: "finnhub.io"
     base-url: "api/v1"
-    endpoints: 
+    endpoints:
       stock:
         profile2: "/stock/profile2"
         quote: "/quote"
         symbol: "/stock/symbol"
 
 spring.datasource:
-  driverClassName: 'org.hibernate.dialect.PostgreSQLDialect'
-  url: 'jdbc:postgresql://localhost:5432/projectfinnhub'
-  username: 'postgres'
-  password: 'admin1234'
+  driverClassName: "org.hibernate.dialect.PostgreSQLDialect"
+  url: "jdbc:postgresql://localhost:5432/projectfinnhub"
+  username: "postgres"
+  password: "admin1234"
 
 spring.jpa:
   show-sql: true
   hibernate.ddl-auto: update # update
+
+info.application:
+  name: project-finnhub
+  description: A project to handle stock data
+  author:
+    name: Andy Yip
+    bio: Testing Bio

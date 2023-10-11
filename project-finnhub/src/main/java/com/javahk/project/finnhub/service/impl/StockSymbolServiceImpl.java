@@ -8,10 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.javahk.project.finnhub.entity.StockSymbol;
+import com.javahk.project.finnhub.exception.FinnhubException;
+import com.javahk.project.finnhub.infra.Code;
 import com.javahk.project.finnhub.infra.Protocol;
 import com.javahk.project.finnhub.mapper.FinnhubMapper;
 import com.javahk.project.finnhub.model.finnhub.resp.SymbolDTO;
@@ -44,7 +47,7 @@ public class StockSymbolServiceImpl implements StockSymbolService {
     private String symbolEndpoint;
 
     @Override
-    public List<SymbolDTO> getAllSymbols() {
+    public List<SymbolDTO> getStockSymbol() throws FinnhubException {
         String url = UriComponentsBuilder.newInstance() //
                 .scheme(Protocol.HTTPS.name()) //
                 .host(domain) //
@@ -56,19 +59,26 @@ public class StockSymbolServiceImpl implements StockSymbolService {
                 .toUriString();
         System.out.println("url=" + url);
 
-        SymbolDTO[] symbols = restTemplate.getForObject(url, SymbolDTO[].class);
-        return Arrays.asList(symbols);
+        try {
+            SymbolDTO[] symbols = restTemplate.getForObject(url, SymbolDTO[].class);
+            return Arrays.asList(symbols);
+        } catch (RestClientException e) {
+            throw new FinnhubException(Code.FINNHUB_SYMBOL_NOTFOUND);
+        }
     }
+
+    // @Override
+    // public List<StockSymbol> saveAllSymbols() {
+    // List<SymbolDTO> symbols = getAllSymbols();
+    // List<StockSymbol> stockSymbols = symbols.stream() //
+    // .filter(s -> "Common Stock".equals(s.getType())) //
+    // .map(s -> finnhubMapper.map(s)) // convert to entity
+    // .collect(Collectors.toList());
+    // return symbolRepository.saveAll(stockSymbols);
+    // }
 
     @Override
-    public List<StockSymbol> saveAllSymbols() {
-        List<SymbolDTO> symbols = getAllSymbols();
-        List<StockSymbol> stockSymbols = symbols.stream() //
-                .filter(s -> "Common Stock".equals(s.getType())) //
-                .map(s -> finnhubMapper.map(s)) // convert to entity
-                .collect(Collectors.toList());
-        return symbolRepository.saveAll(stockSymbols);
+    public void deleteAll() {
+        symbolRepository.deleteAll();
     }
-
-    // void deleteAll();
 }

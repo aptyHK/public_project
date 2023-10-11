@@ -4,10 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.javahk.project.finnhub.entity.Stock;
+import com.javahk.project.finnhub.exception.FinnhubException;
+import com.javahk.project.finnhub.infra.Code;
 import com.javahk.project.finnhub.infra.Protocol;
 import com.javahk.project.finnhub.mapper.FinnhubMapper;
 import com.javahk.project.finnhub.model.finnhub.resp.CompanyProfile2DTO;
@@ -40,7 +43,7 @@ public class CompanyServiceImpl implements CompanyService {
     private String companyProfile2Endpoint;
 
     @Override
-    public CompanyProfile2DTO getCompanyProfile2(String symbol) {
+    public CompanyProfile2DTO getCompanyProfile(String symbol) throws FinnhubException {
         String url = UriComponentsBuilder.newInstance() //
                 .scheme(Protocol.HTTPS.name().toLowerCase()) // for testing convinience
                 .host(domain) //
@@ -51,14 +54,18 @@ public class CompanyServiceImpl implements CompanyService {
                 .build() //
                 .toUriString();
 
-        CompanyProfile2DTO companyProfile = restTemplate.getForObject(url, CompanyProfile2DTO.class);
-        return companyProfile;
+        try {
+            CompanyProfile2DTO companyProfile = restTemplate.getForObject(url, CompanyProfile2DTO.class);
+            return companyProfile;
+        } catch (RestClientException e) { // can test by set endpoint value incorrectly in yml
+            throw new FinnhubException(Code.FINNHUB_PROFILE2_NOTFOUND);
+        }
+
+        // the thrown Exception should catch either by the controller / app start runner
     }
 
     @Override
-    public void save(String symbol) {
-        CompanyProfile2DTO companyProfile = getCompanyProfile2(symbol);
-        Stock stock = finnhubMapper.map(companyProfile);
-        stockRepository.save(stock);
+    public void deleteAll() {
+        stockRepository.deleteAll();
     }
 }
