@@ -67,6 +67,7 @@ public class AppStartRunner implements CommandLineRunner {
         // for each symbol,covert to SymbolDTO to StockSymbol (the entity)
         // and than through service layer to do symbolRepository.saveAll(stockSymbols)
         // save the StockSymbol to database
+        // the save method in service layer, will put input as DTO and return as entity
         stockSymbolService.save(symbols).stream() // as the return is list, can stream directly
                 .forEach(symbol -> {
                     try {
@@ -75,7 +76,9 @@ public class AppStartRunner implements CommandLineRunner {
                         // 3.1 convert it to entity Stock
                         Stock stock = finnhubMapper.map(profile);
                         // 3.2 embed the symbol id to the stock entity, as foreign key
+                        // also set stock status to 'N', mean new added to db
                         stock.setStockSymbol(symbol);
+                        stock.setStockStatus('N'); 
                         // 3.3 the stock entity completed, save it to the database
                         // to specifically use a new object reference to carry the same stock, because:
                         // i) there is a return value from the save method, in java, you can choose to
@@ -86,7 +89,7 @@ public class AppStartRunner implements CommandLineRunner {
                         // know using which stage of the object
                         // also is good for make change between method in the future
                         Stock storedStock = companyService.save(stock);
-                        System.out.println("completed stock, symbol=" + symbol.getSymbol());
+                        System.out.println("Added stock, symbol=" + symbol.getSymbol());
 
                         // 4. Use each symbol to get dedicate quote
                         QuoteDTO quote = stockPriceService.getQuote(symbol.getSymbol());
@@ -100,7 +103,7 @@ public class AppStartRunner implements CommandLineRunner {
                         // stockPrice in this state
                         // so is not necessary to use an extra object reference to store it
                         stockPriceService.save(stockPrice);
-                        System.out.println("completed quote, symbol=" + symbol.getSymbol());
+                        System.out.println("Added quote, symbol=" + symbol.getSymbol());
 
                         // 4. Get Symbol (not yet done, for future use with the annotation folder)
                         // availableStockList.add(symbol.getSymbol());
