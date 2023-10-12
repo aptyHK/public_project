@@ -8,5 +8,7 @@ public interface StockPriceService {
 
     QuoteDTO getQuote(String symbol) throws FinnhubException;
 
+    StockPrice save(StockPrice stockPrice);
+
     void deleteAll();
 }

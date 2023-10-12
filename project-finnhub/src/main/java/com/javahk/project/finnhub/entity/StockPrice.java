@@ -48,7 +48,7 @@ public class StockPrice implements Serializable {
     @Column(name = "prev_day_close", columnDefinition = "NUMERIC(15,2)")
     private double prevDayClose;
 
-    // @ManyToOne
-    // @JoinColumn(name = "stock_id", nullable = false) // like using foreign key stock_id reference on id from stock
-    // private Stock stock;
+    @ManyToOne
+    @JoinColumn(name = "stock_id", nullable = false) // like using foreign key stock_id reference on id from stock
+    private Stock stock;
 }

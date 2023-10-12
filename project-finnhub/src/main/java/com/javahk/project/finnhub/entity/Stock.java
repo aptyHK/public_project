@@ -53,8 +53,8 @@ public class Stock implements Serializable {
 
     // assume like select * from stock s, stocksymbol ss where s.symbol_id = ss.id
     // actually symbol_id is not exist in this Stock.java, but it do set symbol on the appstartrunner
-    // @OneToOne
-    // @JoinColumn(name = "symbol_id", nullable = false)
-    // private StockSymbol stockSymbol;
+    @OneToOne
+    @JoinColumn(name = "symbol_id", nullable = false)
+    private StockSymbol stockSymbol;
 
 }

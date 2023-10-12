@@ -65,6 +65,11 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
+    public Stock save(Stock stock) {
+        return stockRepository.save(stock);
+    }
+
+    @Override
     public void deleteAll() {
         stockRepository.deleteAll();
     }

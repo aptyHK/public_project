@@ -64,6 +64,11 @@ public class StockPriceServiceImpl implements StockPriceService {
     }
 
     @Override
+    public StockPrice save(StockPrice stockPrice) {
+        return stockPriceRepository.save(stockPrice);
+    }
+
+    @Override
     public void deleteAll() {
         stockPriceRepository.deleteAll();
     }

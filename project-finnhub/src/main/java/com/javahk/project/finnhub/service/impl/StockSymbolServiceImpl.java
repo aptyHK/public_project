@@ -67,15 +67,15 @@ public class StockSymbolServiceImpl implements StockSymbolService {
         }
     }
 
-    // @Override
-    // public List<StockSymbol> saveAllSymbols() {
-    // List<SymbolDTO> symbols = getAllSymbols();
-    // List<StockSymbol> stockSymbols = symbols.stream() //
-    // .filter(s -> "Common Stock".equals(s.getType())) //
-    // .map(s -> finnhubMapper.map(s)) // convert to entity
-    // .collect(Collectors.toList());
-    // return symbolRepository.saveAll(stockSymbols);
-    // }
+    @Override
+    public List<StockSymbol> save(List<SymbolDTO> symbols) {
+        List<StockSymbol> stockSymbols = symbols.stream() //
+                // there are many types of stock in US exchange, now we only filter the type common stock
+                .filter(s -> "Common Stock".equals(s.getType()))
+                .map(s -> finnhubMapper.map(s)) // convert to entity
+                .collect(Collectors.toList());
+        return symbolRepository.saveAll(stockSymbols);
+    }
 
     @Override
     public void deleteAll() {
