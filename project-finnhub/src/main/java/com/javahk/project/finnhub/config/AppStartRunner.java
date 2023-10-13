@@ -116,5 +116,7 @@ public class AppStartRunner implements CommandLineRunner {
                 });
         System.out.println("Stocks in Inventory are inserted.");
         System.out.println("CommandLineRunner Completed");
+
+        SchedulerTaskConfig.start = true;
     }
 }

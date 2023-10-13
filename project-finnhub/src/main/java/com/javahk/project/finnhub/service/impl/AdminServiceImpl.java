@@ -3,6 +3,7 @@ package com.javahk.project.finnhub.service.impl;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.javahk.project.finnhub.entity.Stock;
 import com.javahk.project.finnhub.entity.StockPrice;
@@ -17,6 +18,7 @@ import com.javahk.project.finnhub.service.AdminService;
 import com.javahk.project.finnhub.service.CompanyService;
 import com.javahk.project.finnhub.service.StockPriceService;
 
+@Service
 public class AdminServiceImpl implements AdminService {
 
     @Autowired
